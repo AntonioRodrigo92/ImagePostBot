@@ -7,36 +7,22 @@ import java.net.URL;
 
 public class ImageDownloader {
 
-    public static BufferedImage urlToImage (String site) {
+    public static BufferedImage urlToImage (String site) throws IOException {
         BufferedImage img = null;
-        try {
-            URL url = new URL(site);
-            img = ImageIO.read(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        URL url = new URL(site);
+        img = ImageIO.read(url);
         return img;
     }
 
-    public static File bufferedImageToFile (BufferedImage img) {
+    public static File bufferedImageToFile (BufferedImage img) throws IOException {
         File file = new File("imagem.png");
-        try {
-            ImageIO.write(img, "png", file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ImageIO.write(img, "png", file);
         return file;
     }
 
-    public static InputStream bufferedImageToInputStream (BufferedImage img) {
+    public static InputStream bufferedImageToInputStream (BufferedImage img) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try {
-            ImageIO.write(img, "png", os);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ImageIO.write(img, "png", os);
         InputStream is = new ByteArrayInputStream(os.toByteArray());
         return is;
     }
