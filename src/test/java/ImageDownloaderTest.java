@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-//@ExtendWith(MockitoExtension.class)
 class ImageDownloaderTest {
 
     @Test
@@ -38,6 +38,20 @@ class ImageDownloaderTest {
             //  then
             assertThrows(IOException.class, executable);
         }
+    }
+
+
+    @DisplayName("Isto é batota!")
+    @Test
+    void should_returnFile_when_BufferedImageGiven() throws IOException {
+        //  given
+        BufferedImage img = ImageIO.read(new File("C:\\Users\\Antonio\\IdeaProjects\\ImagePostBot\\src\\test\\resources\\Lidl-Logo.png"));
+        File expected = new File("C:\\Users\\Antonio\\IdeaProjects\\ImagePostBot\\src\\test\\resources\\Lidl-Logo2.png");
+        ImageIO.write(img, "png", expected);
+        //  when
+        File actual = ImageDownloader.bufferedImageToFile(img);
+        //  then
+        assertEquals(expected.getClass(), actual.getClass());
     }
 
 
