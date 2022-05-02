@@ -1,12 +1,17 @@
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class ImagePostBot {
 
     public static void main (String[] args) {
         String paramPath = args[0];
-//        String paramPath = "C:\\Users\\Antonio\\IdeaProjects\\TesteTwitter\\src\\main\\java\\parameters.txt";
-        ParamGetter pg = new ParamGetter(paramPath);
+        ParamGetter pg = null;
+        try {
+            pg = new ParamGetter(paramPath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         String USERNAME = pg.getRedditUsername();
         String PASSWORD = pg.getRedditPassword();

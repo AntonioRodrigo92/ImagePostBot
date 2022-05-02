@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ParamGetter {
-    Map<String, String> params;
+    private Map<String, String> params;
 
-    public ParamGetter(String fileLocation) {
+    public ParamGetter(String fileLocation) throws FileNotFoundException {
         params = new HashMap<>();
         init(fileLocation);
     }
@@ -42,17 +42,11 @@ public class ParamGetter {
         return params.get("twitterAccessSecretToken");
     }
 
-    private void init (String fileLocation) {
+    private void init (String fileLocation) throws FileNotFoundException {
         File f = new File(fileLocation);
-        try {
-            Scanner sc = new Scanner(f);
-
-            while (sc.hasNextLine()) {
-                populateObject(sc.nextLine());
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        Scanner sc = new Scanner(f);
+        while (sc.hasNextLine()) {
+            populateObject(sc.nextLine());
         }
     }
 
