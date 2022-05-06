@@ -14,10 +14,10 @@ class TweetAPITest {
 
     @BeforeEach
     void setup() {
-        String api_key = "uJ7QjrC590jkS73JFn5Y0l4X0";
-        String api_secret = "rT5JAWD1KAGvXKDMspMxfpWBJoz3QtiGhaJSP2qsF0Uj3uyBnf";
-        String access_token = "1309402936213221377-B46Xp0aeIHDb33JodR7lEeb0ORfRJc";
-        String access_token_secret = "yigmJIsf7YTdBIBgpCE1Bxmfqsd219CdB8yKwOmtFh79s";
+        String api_key = "";
+        String api_secret = "";
+        String access_token = "";
+        String access_token_secret = "";
         tweetAPI = new TweetAPI(api_key, api_secret, access_token, access_token_secret);
     }
 
