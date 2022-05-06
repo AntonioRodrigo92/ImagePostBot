@@ -8,8 +8,8 @@ class SubRedditPostTest {
 
     @BeforeEach
     void setup() {
-        String username = "zy75UB3HCW2HPFsAbnVJWg";
-        String password = "cWOWs6-5BmjnAcHPKfUTLsG8zmuvxA";
+        String username = "";
+        String password = "";
         String subReddit = "earthPorn";
         String searchType = "top";
         subRedditPost = new SubRedditPost(username, password, subReddit, searchType);
