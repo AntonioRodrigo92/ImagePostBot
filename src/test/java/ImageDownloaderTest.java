@@ -21,7 +21,7 @@ class ImageDownloaderTest {
         //  when
         BufferedImage actual = ImageDownloader.urlToImage(url);
         //  then
-        assertTrue(allEqualPixers(expected, actual));
+        assertTrue(allEqualPixels(expected, actual));
     }
 
     @Test
@@ -106,7 +106,7 @@ class ImageDownloaderTest {
         return bin;
     }
 
-    private boolean allEqualPixers(BufferedImage expected, BufferedImage actual) {
+    private boolean allEqualPixels(BufferedImage expected, BufferedImage actual) {
         for (int y = 0; y < actual.getHeight(); y++) {
             for (int x = 0; x < actual.getWidth(); x++) {
                 if (expected.getRGB(x, y) != actual.getRGB(x, y)) {

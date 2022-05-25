@@ -1,100 +1,101 @@
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
-import twitter4j.TwitterException;
-import java.util.ArrayList;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import twitter4j.*;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class TweetAPITest {
-    private TweetAPI tweetAPI;
 
-    @BeforeEach
-    void setup() {
-        String api_key = "";
-        String api_secret = "";
-        String access_token = "";
-        String access_token_secret = "";
-        tweetAPI = new TweetAPI(api_key, api_secret, access_token, access_token_secret);
-    }
+    @InjectMocks
+    private TweetAPI tweetAPI = new TweetAPI("", "", "", "");
+    @Mock
+    private Twitter twitterMock;
 
-    @Test
-    void should_returnTimeLine_when_correctInput() throws TwitterException {
-        //  given
-        List<String> expected = new ArrayList<>();
-        //  when
-        List<String> actual = tweetAPI.getTimeline();
-        //  then
-        assertEquals(expected.getClass(), actual.getClass());
-    }
 
-    @Test
-    void should_throwTwitterException_when_incorrectInput() throws TwitterException {
-        //  given
-        tweetAPI = mock(TweetAPI.class);
-        doThrow(TwitterException.class).when(tweetAPI).getTimeline();
-        //  when
-        Executable executable = () -> tweetAPI.getTimeline();
-        //  then
-        assertThrows(TwitterException.class, executable);
-    }
 
-    @Test
-    void should_postPostTweet_when_correctInput() throws TwitterException {
-        //  given
-        tweetAPI = mock(TweetAPI.class);
-        //  when
-        tweetAPI.postTweet(anyString());
-        //  then
-        verify(tweetAPI, times(1)).postTweet(anyString());
-        verifyNoMoreInteractions(tweetAPI);
-    }
+   @Test
+   void should_throwException_when_getTimeLine() throws TwitterException {
+       //   given
+       when(twitterMock.getHomeTimeline()).thenThrow(TwitterException.class);
+       //   when
+       Executable executable = () -> tweetAPI.getTimeline();
+       //   then
+       assertThrows(TwitterException.class, executable);
+   }
+
+   @Disabled
+   @Test
+   void should_returnTimeLine() throws TwitterException {
+       //   given
+       ResponseList<Status> responses = null;
+       when(twitterMock.getHomeTimeline()).thenReturn(responses);
+       List<String> expected = null;
+       //   when
+       List<String> actual = tweetAPI.getTimeline();
+       //   then
+       assertEquals(expected, actual);
+   }
 
     @Test
-    void should_throwExceptionPostPostTweet_when_incorrectInput() throws TwitterException {
+    void should_ThrowException_when_PostTweet() throws TwitterException {
         //  given
-        tweetAPI = mock(TweetAPI.class);
-        doThrow(TwitterException.class).when(tweetAPI).postTweet(anyString());
+        when(twitterMock.updateStatus(anyString())).thenThrow(TwitterException.class);
         //  when
-        Executable executable = () -> tweetAPI.postTweet("placehold");
+        Executable executable = () -> tweetAPI.postTweet(anyString());
         //  then
         assertThrows(TwitterException.class, executable);
     }
 
-//    @Test
-//    void should_postImagePostTweet_when_correctInput() throws TwitterException {
-//        //  given
-//        tweetAPI = mock(TweetAPI.class);
-//        Twitter twitter = mock(Twitter.class);
-//        //  when
-//        tweetAPI.postImageTweet(anyString(), any(), anyString());
-//        //  then
-//        verify(twitter, times(1)).uploadMedia(anyString(), any());
-//    }
-
     @Test
-    void should_postImagePostTweet_when_correctInput() throws TwitterException {
+    void should_call_updateStatus_once_when_PostTweet() throws TwitterException {
         //  given
-        tweetAPI = mock(TweetAPI.class);
+        String tweet = "top kek";
         //  when
-        tweetAPI.postImageTweet(anyString(), any(), anyString());
+        tweetAPI.postTweet(tweet);
         //  then
-        verify(tweetAPI, times(1)).postImageTweet(anyString(), any(), anyString());
-        verifyNoMoreInteractions(tweetAPI);
+        verify(twitterMock, times(1)).updateStatus(tweet);
     }
 
     @Test
-    void should_throwExceptionPostImagePostTweet_when_incorrectInput() throws TwitterException {
+    void should_throwException_when_postImageTweet() throws TwitterException, FileNotFoundException {
         //  given
-        tweetAPI = mock(TweetAPI.class);
-        doThrow(TwitterException.class).when(tweetAPI).postImageTweet(anyString(), any(), anyString());
+        String tweet = "anyString()";
+        InputStream img = new FileInputStream("C:\\Users\\Antonio\\Desktop\\HappyHotelApp\\class+diagram.png");
+        String imgName = "anyString()";
+
+        lenient().when(twitterMock.uploadMedia(anyString(), any())).thenThrow(TwitterException.class);
+        lenient().when(twitterMock.updateStatus((String) any())).thenThrow(TwitterException.class);
         //  when
-        Executable executable = () -> tweetAPI.postImageTweet(anyString(), any(), anyString());
+        Executable executable = () -> tweetAPI.postImageTweet(tweet, img, imgName);
         //  then
         assertThrows(TwitterException.class, executable);
+    }
+
+    @Disabled
+    @Test
+    void should_call_correctMethods_when_PostTweet() throws TwitterException, FileNotFoundException {
+        //  given
+        String tweet = "anyString()";
+        InputStream img = new FileInputStream("C:\\Users\\Antonio\\Desktop\\HappyHotelApp\\class+diagram.png");
+        String imgName = "anyString()";
+
+        //  when
+        tweetAPI.postImageTweet(tweet, img, imgName);
+        //  then
+//        verify(twitterMock, times(1)).updateStatus(tweet);
     }
 
 }
