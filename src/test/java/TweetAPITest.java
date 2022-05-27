@@ -95,7 +95,7 @@ class TweetAPITest {
         //  when
         tweetAPI.postImageTweet(tweet, img, imgName);
         //  then
-//        verify(twitterMock, times(1)).updateStatus(tweet);
+        verify(twitterMock, times(1)).uploadMedia(imgName, img);
     }
 
 }
