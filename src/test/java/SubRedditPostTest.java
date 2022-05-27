@@ -18,7 +18,7 @@ class SubRedditPostTest {
     @Test
     void should_returnPostAuthor_when_RinchoaStress() {
         //  given
-        String expected = "roseandcharles";
+        String expected = "peeweekid";
         //  when
         String actual = subRedditPost.getAuthor();
         //  then
@@ -28,7 +28,7 @@ class SubRedditPostTest {
     @Test
     void should_returnPostTitle_when_RinchoaStress() {
         //  given
-        String expected = "Night sky over the badlands of southern Utah [OC][1920x1080]";
+        String expected = "I drove 5,000 miles last summer and this was one of the most incredible spots I visited | Monument Valley, AZ [3527x4564][OC]";
         //  when
         String actual = subRedditPost.getTitle();
         //  then
@@ -38,7 +38,7 @@ class SubRedditPostTest {
     @Test
     void should_returnImageURL_when_RinchoaStress() {
         //  given
-        String expected = "https://i.redd.it/570zv6mijrx81.jpg";
+        String expected = "https://i.redd.it/mp1e6x68xu191.jpg";
         //  when
         String actual = subRedditPost.getImageUrl();
         //  then
@@ -48,7 +48,7 @@ class SubRedditPostTest {
     @Test
     void should_returnPostPermalink_when_RinchoaStress() {
         //  given
-        String expected = "www.reddit.com/r/EarthPorn/comments/ujcxvj/night_sky_over_the_badlands_of_southern_utah/";
+        String expected = "www.reddit.com/r/EarthPorn/comments/uyd48k/i_drove_5000_miles_last_summer_and_this_was_one/";
         //  when
         String actual = subRedditPost.getPermalink();
         //  then
